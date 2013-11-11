@@ -31,7 +31,9 @@ function Update () {
 				if (xPlaces[i] != -1) {
 					doneCheck = false;
 				}
-				var newZom : GameObject = GameObject.Instantiate(zombie, new Vector3(30,2,0), Quaternion.identity);
+				
+				var newX : float = -13+(Random.Range(0,2)*13);
+				var newZom : GameObject = GameObject.Instantiate(zombie, new Vector3(newX,-3,0), Quaternion.identity);
 				spawnedZombies[i] = newZom;
 				if (i == xPlaces.Length-1) {
 					fullZoms = true;
@@ -59,7 +61,7 @@ function moveZom(zom : GameObject) {
 	var timeSpent : float = 0;
 	var startPos : Vector3 = zom.transform.position;
 	var newPos : Vector3 = startPos;
-	newPos.x -= moveDist;
+	newPos.z -= moveDist;
 	
 	
 	while (timeSpent < moveTime) {

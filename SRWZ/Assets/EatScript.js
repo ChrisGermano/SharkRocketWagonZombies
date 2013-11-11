@@ -4,11 +4,25 @@ private var canEat : boolean;
 public var eatCD : float;
 private var eatCount : float;
 
-
+//0 1 2 for left middle right
+private var position : int;
 
 function Start () {
 	eatCount = 0;
 	canEat = true;
+	position = 1;
+}
+
+function Update() {
+	if (Input.GetKeyDown("a")) {
+		if (position > 0) {
+			position--;
+		}
+	} else if (Input.GetKeyDown("d")) {
+		if (position < 2) {
+			position++;
+		}
+	}
 }
 
 function LateUpdate () {
@@ -23,8 +37,10 @@ function LateUpdate () {
 	
 	if (eatCount == eatCD) {
 		canEat = true;
-		Debug.Log("Can Eat");
 	}
+	
+	this.transform.position.x = -13 + (position * 13);
+	
 }
 
 function OnTriggerStay(col : Collider) {
@@ -32,7 +48,6 @@ function OnTriggerStay(col : Collider) {
 		if (canEat && col.gameObject.tag == "Zombie") {
 			col.gameObject.renderer.enabled = false;
 		}
-		Debug.Log("Can't Eat");
 		canEat = false;
 		eatCount = 0;
 	}
