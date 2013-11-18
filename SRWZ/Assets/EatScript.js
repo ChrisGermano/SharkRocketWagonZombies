@@ -14,11 +14,11 @@ function Start () {
 }
 
 function Update() {
-	if (Input.GetKeyDown("a")) {
+	if (Input.GetKeyDown("w")) {
 		if (position > 0) {
 			position--;
 		}
-	} else if (Input.GetKeyDown("d")) {
+	} else if (Input.GetKeyDown("s")) {
 		if (position < 2) {
 			position++;
 		}
