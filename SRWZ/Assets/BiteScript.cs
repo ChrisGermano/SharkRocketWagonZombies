@@ -15,7 +15,7 @@ public class BiteScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log (fuelLeft);
+		Debug.Log (fuelLeft);
 		if (fuelLeft > 0f) {
 			if (Input.GetMouseButton(0)) {
 				fuelLeft -= 0.5f;

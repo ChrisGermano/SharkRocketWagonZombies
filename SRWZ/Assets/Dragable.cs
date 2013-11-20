@@ -4,7 +4,9 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class Dragable : MonoBehaviour
 {
-	
+	// BiteScript
+	BiteScript biteScript;
+
 	public int normalCollisionCount = 1;
 	public float moveLimit = .5f;
 	public float collisionMoveFactor = .01f;
@@ -23,6 +25,9 @@ public class Dragable : MonoBehaviour
 	
 	void Start () 
 	{
+		// get the BiteScript
+		biteScript = GameObject.FindGameObjectWithTag("PlayerGhost").GetComponent<BiteScript>();
+
 		myRigidbody = rigidbody;
 		myTransform = transform;
 		if (!cam) 
@@ -74,7 +79,7 @@ public class Dragable : MonoBehaviour
 	
 	void FixedUpdate () 
 	{
-		if (!canMove)
+		if (!canMove || biteScript.fuelLeft <= 0)
 		{
 			return;
 		}
