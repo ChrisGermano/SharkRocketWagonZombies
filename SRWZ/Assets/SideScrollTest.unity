@@ -89,7 +89,7 @@ GameObject:
   - 114: {fileID: 125991321}
   - 114: {fileID: 125991322}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Angus
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombie: {fileID: 100000, guid: 62ec72ff541ad3942b94590baf0148ec, type: 2}
-  xPlaces: 1400000019000000320000003c00000046000000
+  xPlaces: 1400000019000000320000003c0000004600000050000000550000005f0000006400000073000000
   spawnedZombies: []
   spawnRate: 5
   moveTime: 3
