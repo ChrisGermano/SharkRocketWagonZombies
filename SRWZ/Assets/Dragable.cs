@@ -12,29 +12,41 @@ public class Dragable : MonoBehaviour
 	public float collisionMoveFactor = .01f;
 	public float addHeightWhenClicked = 0.0f;
 	public bool freezeRotationOnDrag = true;
-	public Camera cam  ;
-	private Rigidbody myRigidbody ;
-	private Transform myTransform  ;
+	public Camera cam;
+	private Rigidbody myRigidbody;
+	private Transform myTransform;
+	private Vector3 parentPosition;
+	private Vector3 housePosition;
+	private TrailRenderer trail;
+	// length of time to display trail
+	// this is really large so it essentially never disappears
+	public float trailTime = 10000;
+	public float maxOriginDist = 8f;
 	private bool canMove = false;
 	private float yPos;
-	private bool gravitySetting ;
-	private bool freezeRotationSetting ;
-	private float sqrMoveLimit ;
+	private bool gravitySetting;
+	private bool freezeRotationSetting;
+	private float sqrMoveLimit;
 	private int collisionCount = 0;
-	private Transform camTransform ;
+	private Transform camTransform;
 	
 	void Start () 
 	{
 		// get the BiteScript
-		biteScript = GameObject.FindGameObjectWithTag("PlayerGhost").GetComponent<BiteScript>();
+		biteScript = this.GetComponent<BiteScript>();
+
+		// get the trail renderer
+		trail = this.GetComponent<TrailRenderer>();
 
 		myRigidbody = rigidbody;
 		myTransform = transform;
-		if (!cam) 
+		parentPosition = transform.parent.transform.position;
+		housePosition = GameObject.Find("House").transform.position;
+		if (!cam)
 		{
 			cam = Camera.main;
 		}
-		if (!cam) 
+		if (!cam)
 		{
 			Debug.LogError("Can't find camera tagged MainCamera");
 			return;
@@ -76,9 +88,26 @@ public class Dragable : MonoBehaviour
 	{
 		collisionCount--;
 	}
-	
+
+	// reset the player ghost trail time
+	void ResetTrail()
+	{
+		trail.time = trailTime;
+	}
+
 	void FixedUpdate () 
 	{
+		// if we can't move, we're out of fuel, & the ghost's position is not near the player's position
+		if (!canMove && biteScript.fuelLeft <= 0 && Vector3.Distance(housePosition, myTransform.position) > maxOriginDist)
+		{
+			biteScript.fuelLeft = biteScript.maxFuel;
+			myTransform.position = parentPosition;
+			trail.time = 0;
+			Invoke("ResetTrail", 1);
+			return;
+		}
+
+		// if we can't move or there's no fuel left
 		if (!canMove || biteScript.fuelLeft <= 0)
 		{
 			return;

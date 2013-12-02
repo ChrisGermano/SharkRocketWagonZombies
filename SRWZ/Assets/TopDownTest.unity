@@ -86,7 +86,7 @@ GameObject:
   - 65: {fileID: 79296858}
   - 23: {fileID: 79296857}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: House
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -481,6 +481,7 @@ MonoBehaviour:
   addHeightWhenClicked: 0
   freezeRotationOnDrag: 1
   cam: {fileID: 983783489}
+  maxOriginDist: 8
 --- !u!96 &1282123079
 TrailRenderer:
   m_ObjectHideFlags: 0
@@ -502,7 +503,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Time: 10
+  m_Time: 10000
   m_StartWidth: 1
   m_EndWidth: 1
   m_Colors:
