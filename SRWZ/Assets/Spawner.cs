@@ -20,7 +20,21 @@ public class Spawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		GameObject ZS = GameObject.Find ("ZomSaver");
+		ZomSaver scriptZS = (ZomSaver)ZS.GetComponent<ZomSaver>();
+		ArrayList MZ = scriptZS.missedZombies;
+		Debug.Log (MZ.Count);
+		foreach (GameObject z in MZ) {
+			GameObject newZ = (GameObject)Instantiate(zombieObj);
+			if (z == null) {
+				newZ.transform.position = new Vector3(
+					Random.Range(LEFT_BOUND, RIGHT_BOUND),
+					newZ.transform.position.y,
+					Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND));
+			} else {
+				newZ.transform.position = z.transform.position;
+			}
+		}
 	}
 	
 	// Update is called once per frame

@@ -6,6 +6,8 @@ TagManager:
   - PlayerBite
   - Zombie
   - PlayerGhost
+  - ZomSaver
+  - ZomSpawner
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

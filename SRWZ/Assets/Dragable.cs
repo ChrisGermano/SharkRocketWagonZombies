@@ -77,6 +77,24 @@ public class Dragable : MonoBehaviour
 			pos.y = yPos-addHeightWhenClicked;
 			myTransform.position = pos;
 		}
+
+		GameObject[] zoms = GameObject.FindGameObjectsWithTag("Zombie");
+		Debug.Log ("Missed zoms: " + zoms.Length);
+		GameObject ZSave = GameObject.FindGameObjectWithTag("ZomSaver");
+		ZomSaver scriptZSave = (ZomSaver)ZSave.GetComponent<ZomSaver>();
+
+		if (scriptZSave.savedZombies.Count > 0) {
+			GameObject ZSpawn = GameObject.FindGameObjectWithTag("ZomSpawner");
+			Spawner scriptZSpawn = (Spawner)ZSpawn.GetComponent<Spawner>();
+			scriptZSave.remainingSpawns = 20 - scriptZSpawn.spawned;
+			foreach (GameObject z in zoms) {
+				if (z.renderer.enabled) {
+					scriptZSave.missedZombies.Add(z);
+				}
+			}
+			Application.LoadLevel("SizeScroll");
+		}
+
 	}
 	
 	void OnCollisionEnter () 

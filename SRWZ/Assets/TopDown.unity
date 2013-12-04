@@ -235,6 +235,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97e04d85c7aa43c99059c4e59684147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1057998563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1057998564}
+  - 114: {fileID: 1057998565}
+  m_Layer: 0
+  m_Name: ZomSaver
+  m_TagString: ZomSaver
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1057998564
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1057998563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1057998565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1057998563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c428331efb6fa46b082ac1ba2253c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remainingSpawns: 0
 --- !u!1 &1148363729
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +520,7 @@ MonoBehaviour:
   addHeightWhenClicked: 0
   freezeRotationOnDrag: 1
   cam: {fileID: 983783489}
+  trailTime: 10000
   maxOriginDist: 8
 --- !u!96 &1282123079
 TrailRenderer:
@@ -537,6 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuelLeft: 0
   maxFuel: 100
+  ZS: {fileID: 0}
 --- !u!1 &2025936538
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +589,7 @@ GameObject:
   - 114: {fileID: 2025936540}
   m_Layer: 0
   m_Name: ZombieSpawner
-  m_TagString: Untagged
+  m_TagString: ZomSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -578,7 +619,7 @@ MonoBehaviour:
   zombieObj: {fileID: 100000, guid: 62ec72ff541ad3942b94590baf0148ec, type: 2}
   NUM_TO_SPAWN: 20
   spawned: 0
-  spawnInterval: 1
+  spawnInterval: 2
   lastSpawnTime: 0
   BOUND_RANGE: 6
   TOP_BOUND: 46

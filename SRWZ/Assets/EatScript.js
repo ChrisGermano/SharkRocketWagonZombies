@@ -5,6 +5,7 @@ public var eatCD : float;
 private var eatCount : float;
 private var canHurt : boolean; //can Angus take damage
 private var health : int;
+private var ZS : GameObject;
 
 //0 1 2 for left middle right
 private var position : int;
@@ -14,6 +15,7 @@ function Start () {
 	canEat = true;
 	position = 1;
 	health = 5;
+	ZS = GameObject.Find("ZomSaver");
 }
 
 /*
@@ -78,14 +80,15 @@ function OnTriggerStay(col : Collider) {
 		}
 		canEat = false;
 		eatCount = 0;
-	}
-	//if we're not biting but colliding, take damage
-	else {
+	} else {
+		//This logic doesn't work
+		/*
 		if(col.gameObject.tag == "Zombie" && canHurt) {
 			//Debug.Log("Zombie Hurt Us!");
 			health--;
 			canHurt = false;
 		}
+		*/
 	}
 }
 
