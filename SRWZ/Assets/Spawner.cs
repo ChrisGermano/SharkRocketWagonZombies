@@ -22,8 +22,8 @@ public class Spawner : MonoBehaviour {
 	void Start () {
 		GameObject ZS = GameObject.Find ("ZomSaver");
 		ZomSaver scriptZS = (ZomSaver)ZS.GetComponent<ZomSaver>();
+		NUM_TO_SPAWN = scriptZS.remainingSpawns;
 		ArrayList MZ = scriptZS.missedZombies;
-		Debug.Log (MZ.Count);
 		foreach (GameObject z in MZ) {
 			GameObject newZ = (GameObject)Instantiate(zombieObj);
 			if (z == null) {

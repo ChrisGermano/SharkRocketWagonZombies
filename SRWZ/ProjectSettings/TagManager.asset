@@ -8,6 +8,7 @@ TagManager:
   - PlayerGhost
   - ZomSaver
   - ZomSpawner
+  - House
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

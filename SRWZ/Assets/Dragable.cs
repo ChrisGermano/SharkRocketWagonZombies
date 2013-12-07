@@ -6,7 +6,7 @@ public class Dragable : MonoBehaviour
 {
 	// BiteScript
 	BiteScript biteScript;
-
+	
 	public int normalCollisionCount = 1;
 	public float moveLimit = .5f;
 	public float collisionMoveFactor = .01f;
@@ -34,10 +34,10 @@ public class Dragable : MonoBehaviour
 	{
 		// get the BiteScript
 		biteScript = this.GetComponent<BiteScript>();
-
+		
 		// get the trail renderer
 		trail = this.GetComponent<TrailRenderer>();
-
+		
 		myRigidbody = rigidbody;
 		myTransform = transform;
 		parentPosition = transform.parent.transform.position;
@@ -78,23 +78,24 @@ public class Dragable : MonoBehaviour
 			myTransform.position = pos;
 		}
 
-		GameObject[] zoms = GameObject.FindGameObjectsWithTag("Zombie");
-		Debug.Log ("Missed zoms: " + zoms.Length);
-		GameObject ZSave = GameObject.FindGameObjectWithTag("ZomSaver");
-		ZomSaver scriptZSave = (ZomSaver)ZSave.GetComponent<ZomSaver>();
-
-		if (scriptZSave.savedZombies.Count > 0) {
-			GameObject ZSpawn = GameObject.FindGameObjectWithTag("ZomSpawner");
-			Spawner scriptZSpawn = (Spawner)ZSpawn.GetComponent<Spawner>();
-			scriptZSave.remainingSpawns = 20 - scriptZSpawn.spawned;
-			foreach (GameObject z in zoms) {
-				if (z.renderer.enabled) {
-					scriptZSave.missedZombies.Add(z);
+		if (Vector3.Distance (myTransform.position, housePosition) < maxOriginDist) {
+			GameObject[] zoms = GameObject.FindGameObjectsWithTag("Zombie");
+			GameObject ZSave = GameObject.FindGameObjectWithTag("ZomSaver");
+			ZomSaver scriptZSave = (ZomSaver)ZSave.GetComponent<ZomSaver>();
+			
+			if (scriptZSave.savedZombies.Count > 0) {
+				GameObject ZSpawn = GameObject.FindGameObjectWithTag("ZomSpawner");
+				Spawner scriptZSpawn = (Spawner)ZSpawn.GetComponent<Spawner>();
+				scriptZSave.remainingSpawns = 20 - scriptZSpawn.spawned;
+				Debug.Log ("Remaining spawns: " + scriptZSave.remainingSpawns);
+				foreach (GameObject z in zoms) {
+					if (z.renderer.enabled) {
+						scriptZSave.missedZombies.Add(z);
+					}
 				}
+				Application.LoadLevel("SizeScroll");
 			}
-			Application.LoadLevel("SizeScroll");
 		}
-
 	}
 	
 	void OnCollisionEnter () 
@@ -106,13 +107,13 @@ public class Dragable : MonoBehaviour
 	{
 		collisionCount--;
 	}
-
+	
 	// reset the player ghost trail time
 	void ResetTrail()
 	{
 		trail.time = trailTime;
 	}
-
+	
 	void FixedUpdate () 
 	{
 		// if we can't move, we're out of fuel, & the ghost's position is not near the player's position
@@ -124,7 +125,7 @@ public class Dragable : MonoBehaviour
 			Invoke("ResetTrail", 1);
 			return;
 		}
-
+		
 		// if we can't move or there's no fuel left
 		if (!canMove || biteScript.fuelLeft <= 0)
 		{
