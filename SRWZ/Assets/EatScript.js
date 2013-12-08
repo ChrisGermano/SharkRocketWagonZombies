@@ -7,6 +7,9 @@ private var canHurt : boolean; //can Angus take damage
 private var health : int;
 private var ZS : GameObject;
 
+public var biteMat : Material;
+public var idleMat : Material;
+
 //0 1 2 for left middle right
 private var position : int;
 
@@ -61,12 +64,9 @@ function LateUpdate () {
 		eatCount++;
 	}
 	
-	var eatPercentage : float = (eatCount/eatCD);
-	var eatBar : Color = new Color(0f, eatPercentage, 0f);
-	GameObject.FindGameObjectWithTag("PlayerBite").renderer.material.color = eatBar;
-	
 	if (eatCount == eatCD) {
 		canEat = true;
+		this.renderer.material = idleMat;
 	}
 	
 	this.transform.position.x = -13 + (position * 13);
@@ -76,6 +76,7 @@ function LateUpdate () {
 function OnTriggerStay(col : Collider) {
 	if (Input.GetKeyDown("space")) {
 		if (canEat && col.gameObject.tag == "Zombie") {
+			this.renderer.material = biteMat;
 			col.gameObject.renderer.enabled = false;
 		}
 		canEat = false;

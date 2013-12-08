@@ -29,8 +29,9 @@ public class SaveLoadSide : MonoBehaviour {
 			if (spawnTick >= spawnRate) {
 				spawnTick = 0;
 				spawned++;
-				float newX = -13+(Random.Range(0,2)*13);
+				float newX = -13+(Random.Range(0,3)*13);
 				GameObject tempZom = (GameObject)GameObject.Instantiate(zombie, new Vector3(newX,-3,0), Quaternion.identity);
+				tempZom.transform.eulerAngles = new Vector3(0, 0, 180);
 				generatedZoms.Add(tempZom);
 			}
 		}

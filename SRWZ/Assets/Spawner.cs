@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour {
 			if (z == null) {
 				newZ.transform.position = new Vector3(
 					Random.Range(LEFT_BOUND, RIGHT_BOUND),
-					newZ.transform.position.y,
+					0.5f,
 					Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND));
 			} else {
 				newZ.transform.position = z.transform.position;
