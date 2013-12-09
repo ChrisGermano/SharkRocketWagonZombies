@@ -29,7 +29,7 @@ public class BiteScript : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col) {
 		if (col.gameObject.tag == "Zombie") {
-			ZomSaver zoms = (ZomSaver)GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
+			ZomSaver zoms = GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
 			zoms.savedZombies.Add(col.gameObject);
 			col.gameObject.renderer.enabled = false;
 		}

@@ -15,5 +15,6 @@ public class ZombieController : MonoBehaviour {
 	void Update () {
 		// move towards the player object
 		transform.position = Vector3.Lerp(transform.position, player.transform.position, 0.0001f);
+		transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
 	}
 }

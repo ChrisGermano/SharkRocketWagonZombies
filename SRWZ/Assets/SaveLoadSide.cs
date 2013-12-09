@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class SaveLoadSide : MonoBehaviour {
 
 	public GameObject zombie;
-
-	public GameObject ZS;
+	
+	public ZomSaver ZS;
 	public ArrayList loadedZoms;
 	private ArrayList generatedZoms;
 	private int spawned;
@@ -16,8 +16,8 @@ public class SaveLoadSide : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		ZS = GameObject.Find("ZomSaver");
-		loadedZoms = ZS.GetComponent<ZomSaver>().savedZombies;
+		ZS = GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
+		loadedZoms = ZS.savedZombies;
 		generatedZoms = new ArrayList();
 		spawned = 0;
 	}
@@ -51,11 +51,11 @@ public class SaveLoadSide : MonoBehaviour {
 
 		if((completed + ateCount) >= loadedZoms.Count) {
 			
-			ZS.GetComponent<ZomSaver>().savedZombies.Clear ();
+			ZS.savedZombies.Clear();
 
 			foreach (GameObject z in generatedZoms) {
 				if (z.renderer.enabled) {
-					ZS.GetComponent<ZomSaver>().missedZombies.Add(z);
+					ZS.missedZombies.Add(z);
 				}
 			}
 

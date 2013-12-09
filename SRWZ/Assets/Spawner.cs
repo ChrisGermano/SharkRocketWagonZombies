@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Spawner : MonoBehaviour {
 
+	public GameObject zomSaverObj;
 	public GameObject zombieObj;
 	// number of zombies to spawn
 	public int NUM_TO_SPAWN = 20;
@@ -20,21 +21,24 @@ public class Spawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GameObject ZS = GameObject.Find ("ZomSaver");
-		ZomSaver scriptZS = (ZomSaver)ZS.GetComponent<ZomSaver>();
-		NUM_TO_SPAWN = scriptZS.remainingSpawns;
-		ArrayList MZ = scriptZS.missedZombies;
+		if (!GameObject.FindGameObjectWithTag("ZomSaver")) {
+			Instantiate(zomSaverObj);
+		}
+		ZomSaver ZS = GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
+		NUM_TO_SPAWN = ZS.remainingSpawns;
+		ArrayList MZ = ZS.missedZombies;
 		foreach (GameObject z in MZ) {
 			GameObject newZ = (GameObject)Instantiate(zombieObj);
 			if (z == null) {
 				newZ.transform.position = new Vector3(
 					Random.Range(LEFT_BOUND, RIGHT_BOUND),
-					0.5f,
+					1f,
 					Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND));
 			} else {
 				newZ.transform.position = z.transform.position;
 			}
 		}
+		ZS.missedZombies.Clear();
 	}
 	
 	// Update is called once per frame
