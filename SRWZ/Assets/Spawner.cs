@@ -16,8 +16,8 @@ public class Spawner : MonoBehaviour {
 	// spawning bounds
 	public float BOUND_RANGE = 6f;
 	public float TOP_BOUND = 46f;
-	public float LEFT_BOUND = -46f;
-	public float RIGHT_BOUND = 46f;
+	public float LEFT_BOUND = -110f;
+	public float RIGHT_BOUND = 110f;
 
 	// Use this for initialization
 	void Start () {
@@ -27,15 +27,18 @@ public class Spawner : MonoBehaviour {
 		ZomSaver ZS = GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
 		NUM_TO_SPAWN = ZS.remainingSpawns;
 		ArrayList MZ = ZS.missedZombies;
-		foreach (GameObject z in MZ) {
+		foreach (GameObject zom in MZ) {
 			GameObject newZ = (GameObject)Instantiate(zombieObj);
-			if (z == null) {
-				newZ.transform.position = new Vector3(
-					Random.Range(LEFT_BOUND, RIGHT_BOUND),
-					1f,
-					Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND));
+			if (zom == null) {
+				float x = Random.Range(LEFT_BOUND, RIGHT_BOUND);
+				float z;
+				//trying to get zombies to spawn closer to the house from the sides
+				//so that they dont all just group at the top
+				if(x > 100f || x < -100f) {z = 0;}
+				else{z = Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND);}
+				newZ.transform.position = new Vector3(x,1f,z);
 			} else {
-				newZ.transform.position = z.transform.position;
+				newZ.transform.position = zom.transform.position;
 			}
 		}
 		ZS.missedZombies.Clear();
@@ -51,11 +54,14 @@ public class Spawner : MonoBehaviour {
 	void Spawn () {
 		lastSpawnTime = Time.time;
 		spawned++;
-		GameObject z = (GameObject)Instantiate(zombieObj);
-		z.transform.position = new Vector3(
-			Random.Range(LEFT_BOUND, RIGHT_BOUND),
-			z.transform.position.y,
-			Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND));
+		GameObject zom = (GameObject)Instantiate(zombieObj);
+		float x = Random.Range(LEFT_BOUND, RIGHT_BOUND);
+		float z;
+		//trying to get zombies to spawn closer to the house from the sides
+		//so that they dont all just group at the top
+		if(x > 100f || x < -100f) {z = 0;}
+		else{z = Random.Range(TOP_BOUND - BOUND_RANGE, TOP_BOUND);}
+		zom.transform.position = new Vector3(x,zom.transform.position.y,z);
 	}
 }
 
