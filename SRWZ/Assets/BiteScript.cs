@@ -34,10 +34,15 @@ public class BiteScript : MonoBehaviour {
 			col.gameObject.renderer.enabled = false;
 		}
 		else if (col.gameObject.tag == "WaterPickup") {
-			Debug.Log("Picked Up The Water!");
+			ZomSaver zoms = GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
+			zoms.collectedWater.Add(col.gameObject);
+			zoms.water_index = zoms.savedZombies.Count;
+			col.gameObject.renderer.enabled = false;
+			Debug.Log("Picked Up The Water At " + zoms.water_index);
 		}
 		else if (col.gameObject.tag == "FuelPickup") {
 			fuelLeft += (maxFuel / 5);
+			col.gameObject.renderer.enabled = false;
 			Debug.Log("Picked Up The Fuel!");
 		}
 	}

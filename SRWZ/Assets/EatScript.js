@@ -5,6 +5,7 @@ public var eatCD : float;
 private var eatCount : float;
 private var canHurt : boolean; //can Angus take damage
 private var health : int;
+private var max_health : int;
 private var ZS : GameObject;
 
 public var biteMat : Material;
@@ -17,7 +18,8 @@ function Start () {
 	eatCount = 0;
 	canEat = true;
 	position = 1;
-	health = 5;
+	max_health = 5;
+	health = max_health;
 	ZS = GameObject.Find("ZomSaver");
 }
 
@@ -25,20 +27,7 @@ function Start () {
 TODO: fix this so it works... lol
 */
 function OnGUI () {
-		if (health <= 0) {
-			GUI.Label (Rect (200, 10, 100, 20), "I SO DEAD FRUM ZOMS. GAM OIVAY.");
-		}
-		// fuel box background
-		var bgTexture : Texture2D = new Texture2D(1, 1);
-		bgTexture.SetPixel(0, 0, Color.red);
-		bgTexture.Apply();
-		GUI.Box(new Rect(25, 20, 100, 10), bgTexture);
-
-		// fuel left box
-		var boxTexture : Texture2D = new Texture2D(1, 1);
-		boxTexture.SetPixel(0, 0, Color.green);
-		boxTexture.Apply();
-		GUI.Box(new Rect(25, 20, (health > 0 ? health : 0), 10), boxTexture);
+	GUI.Label(Rect(100, 10, 100, 20), "Angus HP: " + health + " / " + max_health);
 }
 
 function Update() {
@@ -73,6 +62,14 @@ function LateUpdate () {
 	
 }
 
+function OnTriggerEnter(col : Collider) {
+	if(col.gameObject.tag == "WaterPickup") {
+		health++;
+		Debug.Log("HEALTH = " + health);
+		col.gameObject.renderer.enabled = false;
+	}
+}
+
 function OnTriggerStay(col : Collider) {
 	if (Input.GetKeyDown("space")) {
 		if (canEat && col.gameObject.tag == "Zombie") {
@@ -81,16 +78,7 @@ function OnTriggerStay(col : Collider) {
 		}
 		canEat = false;
 		eatCount = 0;
-	} else {
-		//This logic doesn't work
-		/*
-		if(col.gameObject.tag == "Zombie" && canHurt) {
-			//Debug.Log("Zombie Hurt Us!");
-			health--;
-			canHurt = false;
-		}
-		*/
-	}
+	} 
 }
 
 function OnTriggerExit(col : Collider) {

@@ -5,11 +5,14 @@ using System.Collections.Generic;
 public class SaveLoadSide : MonoBehaviour {
 
 	public GameObject zombie;
+	public GameObject water;
 	
 	public ZomSaver ZS;
 	public ArrayList loadedZoms;
 	private ArrayList generatedZoms;
+	private ArrayList generatedPickups;
 	private int spawned;
+	private int pickups;
 	
 	public int spawnRate;
 	private int spawnTick;
@@ -19,7 +22,9 @@ public class SaveLoadSide : MonoBehaviour {
 		ZS = GameObject.FindGameObjectWithTag("ZomSaver").GetComponent<ZomSaver>();
 		loadedZoms = ZS.savedZombies;
 		generatedZoms = new ArrayList();
+		generatedPickups = new ArrayList();
 		spawned = 0;
+		pickups = ZS.collectedWater.Count;
 	}
 	
 	// Update is called once per frame
@@ -34,11 +39,20 @@ public class SaveLoadSide : MonoBehaviour {
 				tempZom.transform.eulerAngles = new Vector3(0, 0, 180);
 				generatedZoms.Add(tempZom);
 			}
+			//see if its about time we spawned the water
+			if (ZS.water_index <= spawned && pickups > 0) {
+				float newX = -13+(Random.Range(0,3)*13);
+				GameObject tempWater = (GameObject)GameObject.Instantiate(water, new Vector3(newX,-3,0), Quaternion.identity);
+				tempWater.transform.eulerAngles = new Vector3(0, 0, 180);
+				generatedPickups.Add(tempWater);
+				pickups--;
+			}
 		}
 
 		int ateCount = 0;
 		int completed = 0;
 
+		//Move zombies
 		for (int i = 0; i < spawned; i++) {
 			GameObject tempZ = (GameObject)generatedZoms[i];
 			Move(tempZ);
@@ -47,6 +61,12 @@ public class SaveLoadSide : MonoBehaviour {
 			} else if (tempZ.transform.position.z < -70) {
 				completed++;
 			}
+		}
+
+		//Move pickups
+		for(int i = 0; i < generatedPickups.Count; i++) {
+			GameObject tempW = (GameObject)generatedPickups[i];
+			Move(tempW);
 		}
 
 		if((completed + ateCount) >= loadedZoms.Count) {
