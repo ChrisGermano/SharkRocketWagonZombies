@@ -78,7 +78,15 @@ public class Dragable : MonoBehaviour
 			myTransform.position = pos;
 		}
 
-		if (Vector3.Distance (myTransform.position, housePosition) < maxOriginDist) {
+		if (Vector3.Distance (myTransform.position, housePosition) > maxOriginDist) {
+			biteScript.fuelLeft = biteScript.maxFuel;
+			myTransform.position = parentPosition;
+			trail.time = 0;
+			Invoke("ResetTrail", 1);
+			return;
+		}
+
+		else {
 			GameObject[] zoms = GameObject.FindGameObjectsWithTag("Zombie");
 			GameObject ZSave = GameObject.FindGameObjectWithTag("ZomSaver");
 			ZomSaver scriptZSave = (ZomSaver)ZSave.GetComponent<ZomSaver>();
@@ -129,6 +137,10 @@ public class Dragable : MonoBehaviour
 		// if we can't move or there's no fuel left
 		if (!canMove || biteScript.fuelLeft <= 0)
 		{
+			biteScript.fuelLeft = biteScript.maxFuel;
+			myTransform.position = parentPosition;
+			trail.time = 0;
+			Invoke("ResetTrail", 1);
 			return;
 		}
 		
